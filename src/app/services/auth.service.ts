@@ -73,5 +73,4 @@ export class AuthService {
       new_password: newPassword
     });
   }
-  
 }

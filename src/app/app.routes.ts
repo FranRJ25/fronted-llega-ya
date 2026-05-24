@@ -5,29 +5,44 @@ import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Home } from './pages/home/home';
 import { Profile } from './pages/profile/profile';
-import { ForgotPassword } from './pages/forgot-password/forgot-password';
-import { ResetPassword } from './pages/reset-password/reset-password';
+import { MiComercio } from './pages/mi-comercio/mi-comercio';
+import { Comercios } from './pages/comercios/comercios';
+import { Carrito }   from './pages/carrito/carrito';
 
 export const routes: Routes = [
   { path: '', component: Login },
   { path: 'register', component: Register },
-  { path: 'forgot-password', component: ForgotPassword },
-  { path: 'reset-password', component: ResetPassword },
-  {
-    path: 'home',
-    component: Home,
-    canActivate: [authGuard]
+  { path: 'home', component: Home, canActivate: [authGuard]},
+  { path: 'profile', component: Profile, canActivate: [authGuard]},
+  { path: 'comercio/registro', canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/comercio-registro/comercio-registro')
+        .then(m => m.ComercioRegistro)
   },
-  {
-    path: 'profile',
-    component: Profile,
-    canActivate: [authGuard]
+  { path: 'mi-comercio', component: MiComercio, canActivate: [authGuard]},
+  { path: 'catalogo', canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/catalogo/catalogo').then(m => m.Catalogo)
   },
-  {
-    path: 'admin',
-    canActivate: [authGuard, adminGuard],
+  { path: 'forgot-password', loadComponent: () =>
+    import('./pages/forgot-password/forgot-password')
+      .then(m => m.ForgotPassword)
+  },
+  { path: 'reset-password',
+  loadComponent: () =>
+    import('./pages/reset-password/reset-password')
+      .then(m => m.ResetPassword)
+  },
+  { path: 'comercios', component: Comercios, canActivate: [authGuard] },
+  { path: 'carrito',   component: Carrito,   canActivate: [authGuard] },
+  { path: 'admin', canActivate: [authGuard, adminGuard],
     loadComponent: () =>
       import('./pages/admin/admin').then(m => m.Admin)
   },
-  { path: '**', redirectTo: '' }
+  { path: 'pedidos', canActivate: [authGuard],
+  loadComponent: () =>
+    import('./pages/mis-pedidos/mis-pedidos').then(m => m.MisPedidos)
+},
+  { path: '**', redirectTo: '' },
+
 ];

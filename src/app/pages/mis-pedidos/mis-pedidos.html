@@ -1,0 +1,94 @@
+<app-navbar></app-navbar>
+
+<div class="pedidos-container">
+  <h1 class="titulo">Mis Pedidos</h1>
+
+  <div *ngIf="cargando" class="mensaje-info">Cargando pedidos...</div>
+  <div *ngIf="errorMsg" class="mensaje-error">{{ errorMsg }}</div>
+
+  <div *ngIf="!cargando && pedidos.length === 0 && !errorMsg" class="mensaje-info">
+    No tienes pedidos aún.
+  </div>
+
+  <div class="pedido-card" *ngFor="let pedido of pedidos">
+    <div class="pedido-header">
+      <span class="pedido-id">Pedido #{{ pedido.id }}</span>
+      <span class="pedido-estado" [ngClass]="claseEstado(pedido.estado)">
+        {{ etiquetaEstado(pedido.estado) }}
+      </span>
+    </div>
+
+    <div class="pedido-info">
+      <p><strong>Dirección:</strong> {{ pedido.direccion_entrega }}</p>
+      <p><strong>Total:</strong> S/ {{ pedido.total }}</p>
+      <p><strong>Fecha:</strong> {{ pedido.created_at | date:'dd/MM/yyyy HH:mm' }}</p>
+    </div>
+
+    <div class="pedido-detalles">
+      <p><strong>Productos:</strong></p>
+      <ul>
+        <li *ngFor="let d of pedido.detalles">
+          Producto #{{ d.producto }} — Cantidad: {{ d.cantidad }} — S/ {{ d.precio_unitario }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Botón cancelar: solo si está pendiente -->
+    <div class="pedido-acciones" *ngIf="pedido.estado === 'pendiente'">
+      <button class="btn-cancelar" (click)="abrirModalCancelacion(pedido)">
+        ❌ Cancelar pedido
+      </button>
+    </div>
+
+    <!-- Mensaje si fue cancelado -->
+    <div class="cancelado-msg" *ngIf="pedido.estado === 'cancelado'">
+      <span>❌ Pedido cancelado</span>
+      <span *ngIf="pedido.motivo_cancelacion" class="motivo">
+        Motivo: "{{ pedido.motivo_cancelacion }}"
+      </span>
+    </div>
+
+    <!-- Mensaje si fue completado -->
+    <div class="completado-msg" *ngIf="pedido.estado === 'completado'">
+      🏁 Pedido completado
+    </div>
+
+  </div>
+</div>
+
+<app-footer></app-footer>
+
+<!-- ═══════════════════════════════════ -->
+<!-- MODAL: CANCELAR PEDIDO              -->
+<!-- ═══════════════════════════════════ -->
+<div class="modal-backdrop" *ngIf="mostrarModal" (click)="cerrarModal()">
+  <div class="modal-cancelacion" (click)="$event.stopPropagation()">
+
+    <header>
+      <h3>Cancelar pedido #{{ pedidoAcancelar?.id }}</h3>
+      <button class="modal-close" (click)="cerrarModal()">✕</button>
+    </header>
+
+    <div class="modal-body">
+      <p>¿Estás seguro que deseas cancelar este pedido?</p>
+      <div class="campo-motivo">
+        <label>Motivo <span class="opcional">(opcional)</span></label>
+        <textarea
+          [(ngModel)]="motivoCancelacion"
+          placeholder="Ej: Me equivoqué en el pedido..."
+          rows="3">
+        </textarea>
+      </div>
+    </div>
+
+    <footer>
+      <button class="btn-outline" (click)="cerrarModal()">
+        No, mantener pedido
+      </button>
+      <button class="btn-danger" (click)="confirmarCancelacion()">
+        Sí, cancelar pedido
+      </button>
+    </footer>
+
+  </div>
+</div>
