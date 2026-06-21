@@ -7,6 +7,7 @@ import { Navbar } from '../components/navbar/navbar';
 import { Footer } from '../components/footer/footer';
 import { CarritoService, ItemCarrito } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-carrito',
@@ -17,7 +18,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl:    './carrito.scss'
 })
 export class Carrito implements OnInit {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   items:       ItemCarrito[] = [];
   porNegocio:  Record<string, ItemCarrito[]> = {};

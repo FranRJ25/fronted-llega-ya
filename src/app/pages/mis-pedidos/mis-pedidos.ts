@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Navbar } from '../components/navbar/navbar';
 import { Footer } from '../components/footer/footer';
 import { ToastService } from '../../services/toast';
+import { environment } from '../../../environments/environment';
 
 interface DetallePedido {
   id: number;
@@ -33,7 +34,7 @@ interface Pedido {
   styleUrl: './mis-pedidos.scss'
 })
 export class MisPedidos implements OnInit {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
   pedidos: Pedido[] = [];
   cargando  = true;
   errorMsg  = '';

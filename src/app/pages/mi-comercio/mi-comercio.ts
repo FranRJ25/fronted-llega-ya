@@ -9,6 +9,7 @@ import { NegocioService, Negocio } from '../../services/negocio.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast';
 import { PedidoService } from '../../services/pedido.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-mi-comercio',
@@ -18,7 +19,7 @@ import { PedidoService } from '../../services/pedido.service';
   styleUrl: './mi-comercio.scss'
 })
 export class MiComercio implements OnInit {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   negocio: Negocio | null = null;
   tabActiva = 'resumen';

@@ -1,10 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Navbar } from '../components/navbar/navbar';
 import { Footer } from '../components/footer/footer';
 import { CarritoService } from '../../services/carrito.service';
+import { environment } from '../../../environments/environment';
 
 interface Negocio {
   id:          number;
@@ -35,7 +36,7 @@ interface Producto {
   styleUrl:    './comercios.scss'
 })
 export class Comercios implements OnInit {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   negocios:          Negocio[]  = [];
   negociosFiltrados: Negocio[]  = [];
@@ -65,6 +66,7 @@ export class Comercios implements OnInit {
     private http: HttpClient,
     private carritoSvc: CarritoService,
     private router: Router,
+    private route: ActivatedRoute,
     private cdRef: ChangeDetectorRef
   ) {}
 
@@ -73,6 +75,14 @@ export class Comercios implements OnInit {
       next: (data) => {
         this.negocios = data;
         this.negociosFiltrados = data;
+
+        // Leer query params del Home (categoria y búsqueda)
+        const params = this.route.snapshot.queryParamMap;
+        const cat = params.get('categoria');
+        const q   = params.get('q');
+        if (cat) this.filtroCategoria = cat;
+        if (q)   this.filtroTexto     = q;
+
         this.aplicarFiltros();
         this.cargando = false;
         this.cdRef.markForCheck();

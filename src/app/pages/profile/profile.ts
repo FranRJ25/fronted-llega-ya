@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth.service';
 import { Navbar } from '../components/navbar/navbar';
 import { Footer } from '../components/footer/footer';
 import { ToastService } from '../../services/toast';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,7 @@ import { ToastService } from '../../services/toast';
   styleUrl: './profile.scss'
 })
 export class Profile implements OnInit {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   usuario: any = null;
   seccionActiva = 'datos';
@@ -47,7 +48,7 @@ export class Profile implements OnInit {
       this.fotoUrl = null;
       return;
     }
-    this.fotoUrl = foto.startsWith('http') ? foto : `http://localhost:8000${foto}`;
+    this.fotoUrl = foto.startsWith('http') ? foto : foto;
   }
 
   initForm() {

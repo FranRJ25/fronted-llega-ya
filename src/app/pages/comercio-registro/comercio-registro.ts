@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { Navbar } from '../components/navbar/navbar';
 import { NegocioService } from '../../services/negocio.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-comercio-registro',
@@ -15,7 +16,7 @@ import { NegocioService } from '../../services/negocio.service';
   styleUrl: './comercio-registro.scss'
 })
 export class ComercioRegistro implements OnInit {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   pasoActual = 1;
   totalPasos = 3;
