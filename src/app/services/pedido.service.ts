@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, timer, switchMap, of, catchError, Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface HistorialEstado {
   id: number;
@@ -39,7 +40,7 @@ export interface Pedido {
 
 @Injectable({ providedIn: 'root' })
 export class PedidoService {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   // Estado compartido para polling (HU08 - estados en tiempo real)
   private pedidos$ = new BehaviorSubject<Pedido[]>([]);

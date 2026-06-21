@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, catchError, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Negocio {
   id:            number;
@@ -20,7 +21,7 @@ export interface Negocio {
 
 @Injectable({ providedIn: 'root' })
 export class NegocioService {
-  private api = 'http://localhost:8000/api/auth';
+  private api = environment.apiUrl;
 
   // BehaviorSubject: cualquier componente puede suscribirse a cambios
   private negocioSubject = new BehaviorSubject<Negocio | null>(null);

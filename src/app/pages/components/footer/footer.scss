@@ -1,15 +1,18 @@
+$verde: #2e7d32; $negro: #111827; $font: 'Inter','Segoe UI',system-ui,sans-serif;
+
 .footer {
-  background: #1a1a1a;
-  color: #aaa;
-  margin-top: 64px;
+  background: $negro;
+  font-family: $font;
+  margin-top: 0;
 
   &-content {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 48px 32px 32px;
+    padding: 56px 32px 40px;
     display: flex;
     gap: 64px;
     flex-wrap: wrap;
+    align-items: flex-start;
   }
 
   &-brand {
@@ -17,23 +20,20 @@
     min-width: 200px;
 
     .logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #4caf50;
-      display: block;
-      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      span { font-size: 1.2rem; font-weight: 900; color: white; }
+      svg { width: 28px; height: 28px; }
     }
 
-    p {
-      font-size: .85rem;
-      line-height: 1.6;
-      color: #888;
-    }
+    p { font-size: .85rem; line-height: 1.7; color: #6b7280; max-width: 240px; }
   }
 
   &-links {
     display: flex;
-    gap: 48px;
+    gap: 56px;
     flex-wrap: wrap;
 
     .col {
@@ -42,29 +42,35 @@
       gap: 10px;
 
       h4 {
-        color: #fff;
-        font-size: .85rem;
+        color: white;
+        font-size: .78rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: .05em;
+        letter-spacing: .08em;
         margin-bottom: 4px;
       }
 
       a {
         text-decoration: none;
-        color: #888;
+        color: #6b7280;
         font-size: .85rem;
-        transition: color .2s;
-        &:hover { color: #4caf50; }
+        transition: color .18s;
+        &:hover { color: #4ade80; }
       }
     }
   }
 
   &-bottom {
-    border-top: 1px solid #2a2a2a;
-    padding: 16px 32px;
-    text-align: center;
-    font-size: .8rem;
-    color: #555;
+    border-top: 1px solid #1f2937;
+    padding: 20px 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: .78rem;
+    color: #4b5563;
   }
 }
